@@ -55,7 +55,7 @@ app.post('/api/shorturl', function(req, res) {
     if (err) return console.log(err)
     res.json({
       "original_url": newURL.original_url,
-      "short_url": newURL.short_url
+      "short_url": suffix
     });
   });
 });
