@@ -33,13 +33,18 @@ app.get('/', function(req, res) {
 // Your first API endpoint
 app.post('/api/shorturl', function(req, res) {
   let url = req.body.url;
- let host =req.hostname;
-  // dns.lookup(url, (err, address) => {
-  //   if (err){
-  //     console.log(err)
-  //     return res.json({'error': 'Invalid url'});
-  //   }
-  // });
+  let urlDns = url.slice(url.indexOf('//') + 2);
+  let slashIndex = urlDns.indexOf('/');
+  urlDns = slashIndex < 0 ? urlDns : urlDns.slice(0, slashIndex);
+  let host = req.hostname;
+
+  dns.lookup(urlDns, (err, address) => {
+    if (err){
+      console.log(err || address === null | undefined)
+      return res.json({'error': 'Invalid url'});
+    }
+    console.log(address);
+  });
   let suffix = shortid.generate();
   let newURL = new URL({
     original_url: url,
