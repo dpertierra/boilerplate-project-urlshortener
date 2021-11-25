@@ -54,10 +54,9 @@ app.post('/api/shorturl', function(req, res) {
   newURL.save((err, data)=>{
     if (err) return console.log(err)
     res.json({
-      "saved": true,
-      "Original URL": newURL.original_url,
-      "Shortened url": newURL.short_url,
-      "id": suffix});
+      "original_url": newURL.original_url,
+      "short_url": newURL.short_url
+    });
   });
 });
 
